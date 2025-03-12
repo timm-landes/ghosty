@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ghostpy"
+version = "0.1.0"
+description = "Wrapper for the Table Stable Ltd. Ghost Software"
+readme = "README.md"
+authors = [
+    {name = "Timm Landes", email = "timm.landes@hot.uni-hannover.de"},
+    {name = "Dag Heinemann", email = "dag.heinemann@hot.uni-hannover.com"}
+]
+requires-python = ">=3.6,<=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "loguru>=0.7.0",
+    "telnetlib3>=2.0.0",
+    "asyncio>=3.4.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/ghostpy"
