@@ -1,6 +1,6 @@
 # ghosty
 
-A Python wrapper for the Table Stable Ltd. Ghost Software for controlling Brillouin spectrometers.
+A Python wrapper for the Table Stable Ltd. Ghost Software for controlling the TFP-1, and the TFP-2 HC Brillouin spectrometer.
 
 ## Installation
 
