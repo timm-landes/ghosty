@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='ghostpy',
+    name='ghosty',
     version='0.1.0',
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
@@ -15,7 +15,7 @@ setup(
     description='Wrapper for the Table Stable Ltd. Ghost Software',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/yourusername/ghostpy',
+    url='https://gitlab.uni-hannover.de/phytophotonics/ghosty',
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',

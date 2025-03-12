@@ -1,11 +1,32 @@
-# ghostpy
+# ghosty
 
 A Python wrapper for the Table Stable Ltd. Ghost Software for controlling Brillouin spectrometers.
 
 ## Installation
 
+Since this package is not yet available on PyPI, you can install it directly from GitLab vis SSH:
+
 ```bash
-pip install ghostpy
+git clone git@gitlab.uni-hannover.de:phytophotonics/ghosty.git
+cd ghostpy
+pip install -e .
+```
+
+### Prerequisites
+
+- Python >=3.6, <=3.12
+- Git
+- GHOST software installed and running
+- TCP/IP connection to GHOST software (default: localhost:4000)
+
+### Development Installation
+
+For development, install with additional dependencies:
+
+```bash
+git clone git@gitlab.uni-hannover.de:phytophotonics/ghosty.git
+cd ghostpy
+pip install -e ".[dev]"
 ```
 
 ## Usage
@@ -33,11 +54,6 @@ async def main():
 
 asyncio.run(main())
 ```
-
-## Requirements
-- Python >=3.6, <=3.12
-- GHOST software installed and running
-- TCP/IP connection to GHOST software (default: localhost:4000)
 
 ## License
 MIT License

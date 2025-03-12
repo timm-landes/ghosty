@@ -3,7 +3,7 @@ requires = ["setuptools>=45", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ghostpy"
+name = "ghosty"
 version = "0.1.0"
 description = "Wrapper for the Table Stable Ltd. Ghost Software"
 readme = "README.md"
@@ -24,4 +24,4 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/ghostpy"
+Homepage = "https://gitlab.uni-hannover.de/phytophotonics/ghotspy"
