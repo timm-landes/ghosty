@@ -11,7 +11,7 @@ authors = [
     {name = "Timm Landes", email = "timm.landes@hot.uni-hannover.de"},
     {name = "Dag Heinemann", email = "dag.heinemann@hot.uni-hannover.com"}
 ]
-requires-python = ">=3.6,<=3.12"
+requires-python = ">=3.6,<=3.12.9"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
