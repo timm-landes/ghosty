@@ -170,6 +170,6 @@ class TcpIpController:
             bool: True if no error, False if connection error
         """
         response = self.send_command('OBSERVE')
-        return "Error : server cannot open serial port" not in response
         await asyncio.sleep(0.1)  # Add this line
         self.stop()
+        return "Error : server cannot open serial port" not in response
