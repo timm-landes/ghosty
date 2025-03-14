@@ -4,12 +4,22 @@ TCP/IP communication interface for the GHOST spectrometer software.
 This module handles the low-level communication with the GHOST software
 using a TCP/IP connection. It implements the command protocol and provides
 methods for sending commands and receiving responses.
+
+The GHOST software uses a simple ASCII-based protocol over TCP/IP where:
+- Commands are sent as ASCII strings terminated by CR+LF
+- Maximum command length is 80 characters
+- Responses are terminated by empty line or specific markers
+- Some commands expect responses, others don't
+
+Protocol Details:
+- Port: 4000 (default)
+- Encoding: UTF-8
+- Termination: \r\n (CR+LF)
+- Timeout: 5 seconds (default)
 """
 
-import telnetlib
+import telnetlib # requires python<=3.12.9, otherwise install telnetlib3
 from loguru import logger
-import time
-import asyncio  # Add this import
 
 class TcpIpController:
     """TCP/IP controller for GHOST software communication.
@@ -18,9 +28,22 @@ class TcpIpController:
     the command protocol. Commands are sent as ASCII strings and responses
     are read until a termination condition is met.
     
+    The controller supports two types of commands:
+    1. Commands that expect a response (send_command)
+    2. Commands without response (send_command_no_response)
+    
     Args:
         host (str): IP address of the GHOST software
         port (int): TCP port number for the connection
+        
+    Attributes:
+        host (str): Stored host address
+        port (int): Stored port number
+        connection (telnetlib.Telnet): Active telnet connection or None
+        
+    Note:
+        Always call connect() before sending commands
+        Always call close() when done to release resources
     """
     
     def __init__(self, host, port):
@@ -29,15 +52,38 @@ class TcpIpController:
         self.connection = None
 
     def connect(self):
+        """Establish TCP/IP connection to the GHOST software.
+        
+        Raises:
+            ConnectionRefusedError: If connection cannot be established
+            TimeoutError: If connection times out
+        """
         self.connection = telnetlib.Telnet(self.host, self.port)
 
     def send_command(self, command):
+        """Send a command and wait for response.
+        
+        Sends an ASCII command to the GHOST software and waits for the complete
+        response. The response is read until an empty line or specific termination
+        marker is encountered.
+        
+        Args:
+            command (str): Command string to send (max 80 chars)
+            
+        Returns:
+            str: Response from the GHOST software with whitespace stripped
+            
+        Raises:
+            ValueError: If connection not established or command too long
+            TimeoutError: If response not received within timeout
+        """
         if self.connection is None:
             raise ValueError("Connection not established. Call connect() first.")
             
         if len(command) > 80:
             raise ValueError(f"Command too long ({len(command)} chars). GHOST commands must be 80 characters or less.")
-
+    
+        logger.debug(f"Command: {command}")
         self.connection.write(command.encode('utf-8') + b'\r\n')
         response = ""
         while True:
@@ -51,7 +97,14 @@ class TcpIpController:
         return response.strip()
 
     def send_command_no_response(self, command):
-        """Send command without waiting for response"""
+        """Send command without waiting for response
+        
+        Args:
+            command (str): Command string to send (max 80 chars)
+            
+        Raises:
+            ValueError: If connection not established or command too long
+        """
         if self.connection is None:
             raise ValueError("Connection not established. Call connect() first.")
             
@@ -62,114 +115,142 @@ class TcpIpController:
         logger.debug(f"Command (no response): {command}")
 
     def close(self):
+        """Close the TCP/IP connection to the GHOST software."""
         if self.connection:
             self.connection.close()
             self.connection = None
 
     def chat(self, text):
-        return self.send_command(f'CHAT "{text}"')
+                return self.send_command(f'CHAT "{text}"')
 
-    def ghost(self, text):
-        if len(text) > 80:
-            raise ValueError("GHOST command text can be up to 80 characters.")
-        return self.send_command(f'GHOST {text}')
 
-    def data(self):
-        return self.send_command('DATA')
 
     def delete(self):
+        """Send a delete command to the GHOST software without waiting for response."""
         return self.send_command_no_response('DELETE')
 
     def get_realtime(self):
+        """Request real-time data from the GHOST software.
+        
+        Returns:
+            str: Response from the GHOST software
+        """
         return self.send_command('GET_REALTIME')
 
     def get_shutter(self):
+        """Request shutter status from the GHOST software.
+        
+        Returns:
+            str: Response from the GHOST software
+        """
         return self.send_command('GET_SHUTTER')
 
     def help(self):
+        """Request help information from the GHOST software.
+        
+        Returns:
+            str: Response from the GHOST software
+        """
         return self.send_command('HELP')
 
     def status(self):
+        """Request status report from the GHOST software.
+        
+        Returns:
+            str: Response from the GHOST software
+        """
         return self.send_command('STATUS')
 
     def observe(self):
+        """Send an observe command to the GHOST software without waiting for response."""
         return self.send_command_no_response('OBSERVE')
 
     def override(self):
+        """Send an override command to the GHOST software.
+        
+        Returns:
+            str: Response from the GHOST software
+        """
         return self.send_command('OVERRIDE')
 
     def save(self, name):
+        """Send a save command to the GHOST software without waiting for response.
+        
+        Args:
+            name (str): Name to save the data under
+        """
         return self.send_command_no_response(f'SAVE {name}')
 
     def saveraw(self, name):
+        """Send a save raw data command to the GHOST software.
+        
+        Args:
+            name (str): Name to save the raw data under
+            
+        Returns:
+            str: Response from the GHOST software
+        """
         return self.send_command(f'SAVERAW {name}')
 
     def set_show_current(self):
+        """Send a command to set the current display mode in the GHOST software.
+        
+        Returns:
+            str: Response from the GHOST software
+        """
         return self.send_command('SET SHOW_CURRENT')
 
     def set_channels(self, num_channels):
+        """Send a command to set the number of channels in the GHOST software.
+        
+        Args:
+            num_channels (int): Number of channels to set
+            
+        Returns:
+            str: Response from the GHOST software
+        """
         return self.send_command(f'SET{num_channels}')
 
     def start(self, cycles):
+        """Send a start command to the GHOST software without waiting for response.
+        
+        Args:
+            cycles (int): Number of cycles to start
+        """
         return self.send_command_no_response(f'START {cycles}')
 
     def stop(self):
+        """Send a stop command to the GHOST software without waiting for response."""
         return self.send_command_no_response('STOP')
 
     def text(self):
+        """Request text data from the GHOST software.
+        
+        Returns:
+            str: Response from the GHOST software
+        """
         return self.send_command('TEXT')
 
     def restore(self):
+        """Send a restore command to the GHOST software.
+        
+        Returns:
+            str: Response from the GHOST software
+        """
         return self.send_command('RESTORE')
 
     def set_working_directory(self, directory):
+        """Send a command to set the working directory in the GHOST software without waiting for response.
+        
+        Args:
+            directory (str): Directory path to set
+        """
         return self.send_command_no_response(f'WDIR {directory}')
 
     def get_working_directory(self):
+        """Request the current working directory from the GHOST software.
+        
+        Returns:
+            str: Response from the GHOST software
+        """
         return self.send_command('WDIR')
-
-    async def is_acquiring(self, max_retries=4):
-        """Check if the system is currently acquiring data.
-        
-        Sends a STATUS command and parses the response to determine if
-        the system is in IDLE or ACQUIRING state.
-        
-        Args:
-            max_retries (int): Number of retry attempts if status check fails
-            
-        Returns:
-            bool: True if system is acquiring, False if idle
-            
-        Note:
-            Returns True if status cannot be determined to prevent premature
-            progression in the acquisition sequence.
-        """
-        
-        for attempt in range(max_retries):
-            response = self.send_command('STATUS')
-            lines = response.split('\n')
-            
-            for line in lines[:5]:
-                line = line.strip()
-                if 'GHOST STATUS REPORT' in line:
-                    is_idle = 'IDLE' in line
-                    logger.trace(f"Status line: {line}")
-                    return not is_idle  # Return True if NOT idle (i.e., acquiring)
-            
-            if attempt < max_retries - 1:
-                logger.debug(f"Status not found, retrying ({attempt + 1}/{max_retries})")
-                await asyncio.sleep(0.05)
-            
-        logger.error("Could not get valid status response")
-        return True  # Safer to assume still acquiring if status unclear
-    
-    async def test_spectrometer(self):
-        """Test if spectrometer is physically connected.
-        
-        Returns:
-            bool: True if no error, False if connection error
-        """
-        response = self.send_command('OBSERVE')
-        await asyncio.sleep(0.1)  # Add this line
-        self.stop()
-        return "Error : server cannot open serial port" not in response
