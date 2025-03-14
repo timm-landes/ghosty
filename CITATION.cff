@@ -1,0 +1,31 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Ghosty
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Timm
+    family-names: Landes
+    email: timm.landes@hot.uni-hannover.de
+    affiliation: Leibniz University Hannover
+    orcid: 'https://orcid.org/0000-0001-8953-3003'
+  - given-names: Dag
+    family-names: Heinemann
+    email: dag.heinemann@hot.uni-hannover.de
+    affiliation: Leibniz University Hannover
+    orcid: 'https://orcid.org/0000-0003-3506-1762'
+repository-code: 'https://gitlab.uni-hannover.de/phytophotonics/ghosty'
+abstract: >-
+  Python interface for controlling the GHOST Brillouin
+  spectrometer software via TCP/IP communication.
+keywords:
+  - Brillouin scattering
+  - Brillouin spectrometer control
+license: MIT
+commit: v0.1.1
+version: 0.1.1
+date-released: '2025-03-14'
