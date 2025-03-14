@@ -235,4 +235,6 @@ Leibniz University Hannover. https://gitlab.uni-hannover.de/phytophotonics/ghost
 
 ### Related Publications
 If applicable, please also cite the following related publications:
-[Add any relevant papers about the GHOST spectrometer or this control software]
+```
+Landes, T., Khanal, B.P., Bethge, H.L. et al. Micromechanical behavior of the apple fruit cuticle investigated by Brillouin light scattering microscopy. Commun Biol 8, 174 (2025). https://doi.org/10.1038/s42003-025-07555-5
+```
