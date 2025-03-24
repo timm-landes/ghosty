@@ -13,7 +13,21 @@ Python interface for controlling the GHOST Brillouin spectrometer software via T
 - Support for both standard (4 kHz) and high-speed (10 kHz) modes
 
 ## Installation
+### From PyPI
 
+ghosty is available from PyPI.
+1. Create and activate a virtual environment (recommended):
+```bash
+python -m venv venv
+# On Windows:
+.\venv\Scripts\activate
+# On Linux/Mac:
+source venv/bin/activate
+```
+2. Install via pip
+```bash
+pip install ghosty
+```
 ### From Git Repository
 
 1. Clone the repository:
