@@ -18,7 +18,7 @@ Python interface for controlling the GHOST Brillouin spectrometer software via T
 
 1. Clone the repository:
 ```bash
-git clone https://gitlab.uni-hannover.de/phytophotonics/ghosty.git
+git clone https://github.com/timm-landes/ghosty.git
 cd ghosty
 ```
 
@@ -156,7 +156,7 @@ Uses loguru for comprehensive logging:
 
 ## Requirements
 
-- Python ≤ 3.12.9 (for telnetlib) or telnetlib3
+- Python ≤ 3.12.9 (for telnetlib) or telnetlib3 when using Python ≥ 3.13
 - asyncio
 - loguru
 
@@ -165,8 +165,7 @@ Uses loguru for comprehensive logging:
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Run the test suite
-5. Submit a pull request
+4. Submit a pull request
 
 ## License
 
@@ -183,7 +182,7 @@ For development work:
 1. Clone the repository as described above
 2. Install development dependencies:
 ```bash
-pip install -r requirements-dev.txt
+pip install -r requirements.txt
 ```
 
 3. Setup pre-commit hooks:
@@ -194,7 +193,9 @@ pre-commit install
 ## Repository
 
 The project is hosted on GitLab at the University of Hannover:
-https://gitlab.uni-hannover.de/phytophotonics/ghosty
+https://gitlab.uni-hannover.de/phytophotonics/ghosty (internal use)
+and publically available hosted at GitHub:
+https://github.com/timm-landes/ghosty
 
 ## Authors
 
