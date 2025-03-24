@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ghosty"
-version = "0.1.0"
+version = "0.1.2"
 description = "Wrapper for the Table Stable Ltd. Ghost Software"
 readme = "README.md"
 authors = [
@@ -15,7 +15,7 @@ requires-python = ">=3.6,<=3.12.9"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
+    "Operating System :: Microsoft :: Windows",
 ]
 dependencies = [
     "loguru>=0.7.0",
@@ -24,4 +24,5 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://gitlab.uni-hannover.de/phytophotonics/ghotspy"
+Homepage = "https://github.com/timm-landes/ghosty"
+Issues = "https://github.com/timm-landes/ghosty/issues"
